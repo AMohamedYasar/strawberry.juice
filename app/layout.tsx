@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import FirebaseAuthProvider from "@/components/providers/FirebaseAuthProvider";
 import Navbar from "@/components/Navbar";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -25,10 +26,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} font-sans antialiased bg-luxury-black text-white`}>
-        <Navbar />
-        <SmoothScrollProvider>
-          {children}
-        </SmoothScrollProvider>
+        <FirebaseAuthProvider>
+          <Navbar />
+          <SmoothScrollProvider>
+            {children}
+          </SmoothScrollProvider>
+        </FirebaseAuthProvider>
       </body>
     </html>
   );

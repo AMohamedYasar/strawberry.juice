@@ -1,31 +1,11 @@
 'use client'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState, useEffect } from "react";
-import { createClient } from "@/utils/supabase/client";
-import { User } from "@supabase/supabase-js";
+import { useAuth } from '@/contexts/AuthContext'
 import { placeOrder } from "@/app/actions/order";
 
 export default function OrderSection() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user);
-      setLoading(false);
-    });
-    
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
+  const { user, loading } = useAuth()
   return (
     <section className="relative min-h-screen bg-luxury-black/80 backdrop-blur-xl text-white overflow-hidden py-32 rounded-t-[4rem] border-t border-white/10">
       {/* Ambient background glows */}
@@ -90,7 +70,7 @@ export default function OrderSection() {
 
               <div className="flex w-full justify-between items-end relative z-10 mt-6">
                 <div className="text-xs text-white/50 tracking-widest uppercase">1x 500ml Bottle</div>
-                <div className="text-4xl font-light text-glow">$120.00</div>
+                <div className="text-4xl font-light text-glow">₹30</div>
               </div>
             </motion.div>
             
@@ -132,7 +112,7 @@ export default function OrderSection() {
                   <div>
                     <h4 className="text-xs font-semibold tracking-widest uppercase text-brand-coral mb-4">Contact Information</h4>
                     <div className="flex flex-col gap-3">
-                      <input type="email" placeholder="Email Address" defaultValue={user.email} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-coral/60 focus:bg-white/10 transition-all duration-300 font-light" />
+                      <input type="email" placeholder="Email Address" defaultValue={user.email ?? ''} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-white/30 focus:outline-none focus:border-brand-coral/60 focus:bg-white/10 transition-all duration-300 font-light" />
                     </div>
                   </div>
 
@@ -165,7 +145,7 @@ export default function OrderSection() {
                   <div className="mt-4 border-t border-white/10 pt-8">
                     <div className="flex justify-between items-center mb-8">
                       <span className="text-white/60 font-light tracking-widest uppercase text-sm">Order Total</span>
-                      <span className="text-3xl font-light text-glow">$120.00</span>
+                      <span className="text-3xl font-light text-glow">₹30</span>
                     </div>
                     
                     <motion.button 

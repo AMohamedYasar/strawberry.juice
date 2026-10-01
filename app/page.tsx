@@ -3,7 +3,6 @@ import HeroSection from "@/components/HeroSection";
 import StorySection from "@/components/StorySection";
 import IngredientsSection from "@/components/IngredientsSection";
 import CTASection from "@/components/CTASection";
-import OrderSection from "@/components/OrderSection";
 
 export default function Home() {
   return (
@@ -25,11 +24,6 @@ export default function Home() {
         <div className="h-[30vh]"></div>
         
         <CTASection />
-
-        {/* Integrated Order Section pinned directly on the homepage */}
-        <div id="order">
-          <OrderSection />
-        </div>
       </div>
     </main>
   );

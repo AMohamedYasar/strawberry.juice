@@ -12,6 +12,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background: var(--background-start-rgb);
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Hide scrollbar for cleaner look */
@@ -39,4 +40,96 @@ body {
   .glass-panel {
     @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
   }
+}
+
+/* ── Light Mode Color Overrides ── */
+html[data-theme="light"],
+html.light {
+  --foreground-rgb: 20, 20, 20;
+  --background-start-rgb: 247, 245, 246;
+  --background-end-rgb: 247, 245, 246;
+}
+
+html[data-theme="light"] body,
+html.light body {
+  background-color: #f7f5f6 !important;
+  color: #1a1a1a !important;
+}
+
+html[data-theme="light"] .bg-luxury-black,
+html[data-theme="light"] .bg-luxury-black\/80,
+html.light .bg-luxury-black,
+html.light .bg-luxury-black\/80 {
+  background-color: #f7f5f6 !important;
+}
+
+html[data-theme="light"] .text-white,
+html.light .text-white {
+  color: #1a1a1a !important;
+}
+
+html[data-theme="light"] .text-white\/90,
+html[data-theme="light"] .text-white\/80,
+html[data-theme="light"] .text-white\/70,
+html[data-theme="light"] .text-white\/60,
+html.light .text-white\/90,
+html.light .text-white\/80,
+html.light .text-white\/70,
+html.light .text-white\/60 {
+  color: #4b5563 !important;
+}
+
+html[data-theme="light"] .text-white\/50,
+html[data-theme="light"] .text-white\/40,
+html[data-theme="light"] .text-white\/30,
+html.light .text-white\/50,
+html.light .text-white\/40,
+html.light .text-white\/30 {
+  color: #6b7280 !important;
+}
+
+html[data-theme="light"] .glass-panel,
+html.light .glass-panel {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+}
+
+html[data-theme="light"] input,
+html[data-theme="light"] textarea,
+html.light input,
+html.light textarea {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: #111111 !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder,
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+html[data-theme="light"] .border-white\/10,
+html[data-theme="light"] .border-white\/15,
+html[data-theme="light"] .border-white\/20,
+html[data-theme="light"] .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="light"] .bg-white\/5,
+html[data-theme="light"] .bg-white\/10,
+html.light .bg-white\/5,
+html.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="light"] .text-glow,
+html.light .text-glow {
+  text-shadow: 0 0 15px rgba(255, 23, 68, 0.15) !important;
 }

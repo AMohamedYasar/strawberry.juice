@@ -25,10 +25,7 @@ export default function CTASection() {
           Taste the <br className="md:hidden" /><span className="font-serif italic text-brand-coral lowercase md:ml-4 text-glow-coral">Luxury</span>
         </h2>
         
-        <Link href="#order" onClick={(e) => { 
-          e.preventDefault();
-          document.querySelector('#order')?.scrollIntoView({ behavior: 'smooth' });
-        }} className="block">
+        <Link href="/order" className="block">
           <motion.div 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
