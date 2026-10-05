@@ -97,18 +97,27 @@ export default function CheckoutClient({ supabaseUser, orders: initialOrders }: 
       }
     }
 
+    if (!effectiveUid && !firebaseUser?.uid) {
+      setErrorMessage('Please sign in or create an account to complete your purchase.')
+      return
+    }
+
     setLoading(true)
 
     try {
-      console.log('[Checkout] Processing mock payment of ₹', quantity * UNIT_PRICE)
+      const activeUid = effectiveUid || firebaseUser?.uid || ''
+      const activeEmail = effectiveEmail || firebaseUser?.email || ''
+      console.log('[Checkout] 🛒 Initiating checkout for user:', activeEmail, `(UID: ${activeUid})`)
+      console.log('[Checkout] 💳 Processing mock payment of ₹', quantity * UNIT_PRICE)
 
       // Simulate payment network delay (1.2s)
       await new Promise((res) => setTimeout(res, 1200))
 
       // Save order to Firebase
+      console.log('[Checkout] 💾 Calling createOrder...')
       const saved = await createOrder({
-        userId: effectiveUid,
-        userEmail: effectiveEmail,
+        userId: activeUid,
+        userEmail: activeEmail,
         items: 'Pure Nectar Cold-Pressed Strawberry Juice (500ml)',
         quantity,
         unitPrice: UNIT_PRICE,
@@ -126,7 +135,7 @@ export default function CheckoutClient({ supabaseUser, orders: initialOrders }: 
         paymentMethod: paymentMethod === 'card' ? 'Card (Demo)' : paymentMethod === 'upi' ? 'UPI (Demo)' : 'Pay on Delivery',
       })
 
-      console.log('[Checkout] Order successfully created in Firebase:', saved.id)
+      console.log('[Checkout] ✅ Order successfully created with ID:', saved.id)
 
       const recipientName = `${formData.firstName} ${formData.lastName}`.trim()
       const fullAddress = `${formData.address}, ${formData.city} ${formData.postalCode}`.trim()
@@ -135,7 +144,7 @@ export default function CheckoutClient({ supabaseUser, orders: initialOrders }: 
         `/order/confirmation?orderId=${encodeURIComponent(saved.id)}&qty=${quantity}&total=${quantity * UNIT_PRICE}&name=${encodeURIComponent(recipientName)}&address=${encodeURIComponent(fullAddress)}`
       )
     } catch (err: any) {
-      console.error('[Checkout] Order creation failed:', err)
+      console.error('[Checkout] ❌ Order creation failed:', err)
       setErrorMessage(err?.message || 'Payment simulation failed. Please try again.')
       setLoading(false)
     }
